@@ -1,0 +1,157 @@
+// All available PDF tools with metadata and API info
+
+export const categories = [
+  {
+    id: 'edit',
+    label: 'Edit PDF files',
+    tools: [
+      {
+        id: 'merge',
+        label: 'Merge PDF',
+        description: 'Combine multiple PDFs into one document in the order you choose.',
+        icon: 'Combine',
+        endpoint: '/api/merge',
+        multiple: true,
+        accept: { 'application/pdf': ['.pdf'] },
+        fields: [],
+        resultType: 'download',
+        downloadName: 'merged.pdf',
+      },
+      {
+        id: 'split',
+        label: 'Split PDF',
+        description: 'Extract every page of your PDF into separate files, zipped together.',
+        icon: 'Scissors',
+        endpoint: '/api/split',
+        multiple: false,
+        accept: { 'application/pdf': ['.pdf'] },
+        fields: [],
+        resultType: 'download',
+        downloadName: 'split_pages.zip',
+      },
+      {
+        id: 'rotate',
+        label: 'Rotate PDF',
+        description: 'Rotate all pages in your PDF by 90, 180, or 270 degrees.',
+        icon: 'RefreshCw',
+        endpoint: '/api/rotate',
+        multiple: false,
+        accept: { 'application/pdf': ['.pdf'] },
+        fields: [
+          {
+            name: 'degrees',
+            label: 'Rotation angle',
+            type: 'select',
+            options: [
+              { value: '90', label: '90° Clockwise' },
+              { value: '180', label: '180°' },
+              { value: '270', label: '270° (90° Counter-clockwise)' },
+            ],
+            default: '90',
+          },
+        ],
+        resultType: 'download',
+        downloadName: 'rotated.pdf',
+      },
+      {
+        id: 'pdf-info',
+        label: 'PDF Info',
+        description: 'Inspect page count, metadata, and encryption status of any PDF.',
+        icon: 'Info',
+        endpoint: '/api/pdf-info',
+        multiple: false,
+        accept: { 'application/pdf': ['.pdf'] },
+        fields: [],
+        resultType: 'info',
+      },
+    ],
+  },
+  {
+    id: 'improve',
+    label: 'Improve PDF files',
+    tools: [
+      {
+        id: 'protect',
+        label: 'Protect PDF',
+        description: 'Encrypt your PDF with a password so only authorised people can open it.',
+        icon: 'Lock',
+        endpoint: '/api/protect',
+        multiple: false,
+        accept: { 'application/pdf': ['.pdf'] },
+        fields: [
+          {
+            name: 'password',
+            label: 'Password',
+            type: 'password',
+            placeholder: 'Enter a strong password',
+            required: true,
+          },
+        ],
+        resultType: 'download',
+        downloadName: 'protected.pdf',
+      },
+      {
+        id: 'unlock',
+        label: 'Unlock PDF',
+        description: 'Remove the password from a PDF you have the credentials for.',
+        icon: 'LockOpen',
+        endpoint: '/api/unlock',
+        multiple: false,
+        accept: { 'application/pdf': ['.pdf'] },
+        fields: [
+          {
+            name: 'password',
+            label: 'Current password (leave blank if none)',
+            type: 'password',
+            placeholder: 'Enter existing password',
+            required: false,
+          },
+        ],
+        resultType: 'download',
+        downloadName: 'unlocked.pdf',
+      },
+    ],
+  },
+  {
+    id: 'convert-from',
+    label: 'Convert from PDF',
+    tools: [
+      {
+        id: 'pdf-to-text',
+        label: 'PDF to Text',
+        description: 'Extract all readable text from your PDF, page by page.',
+        icon: 'FileText',
+        endpoint: '/api/pdf-to-text',
+        multiple: false,
+        accept: { 'application/pdf': ['.pdf'] },
+        fields: [],
+        resultType: 'text',
+      },
+    ],
+  },
+  {
+    id: 'convert-to',
+    label: 'Convert to PDF',
+    tools: [
+      {
+        id: 'jpg-to-pdf',
+        label: 'JPG to PDF',
+        description: 'Turn one or more images (JPG, PNG, WebP) into a single PDF.',
+        icon: 'Image',
+        endpoint: '/api/jpg-to-pdf',
+        multiple: true,
+        accept: {
+          'image/jpeg': ['.jpg', '.jpeg'],
+          'image/png': ['.png'],
+          'image/webp': ['.webp'],
+          'image/gif': ['.gif'],
+        },
+        fields: [],
+        resultType: 'download',
+        downloadName: 'converted.pdf',
+      },
+    ],
+  },
+]
+
+export const allTools = categories.flatMap((c) => c.tools)

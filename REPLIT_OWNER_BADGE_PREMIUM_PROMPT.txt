@@ -1,0 +1,33 @@
+Set up and verify owner/premium badge + admin upgrade flow in Replit.
+
+What must work:
+1) Owner account (email exactly pritongtinolaaa@gmail.com):
+   - account_tier = owner
+   - is_admin = true
+   - unlimited credits
+   - Legendary Owner badge visible in navbar/profile/admin user table
+2) Free users:
+   - account_tier = free
+   - stale Free badge visible
+3) Premium users:
+   - account_tier = premium
+   - Premium badge visible
+4) Admin action:
+   - In Admin Users tab, owner can click Premium action for free users
+   - Backend endpoint /api/admin/users/:id/upgrade-premium upgrades free -> premium and adds +100 credits
+
+Validation checklist:
+- Register owner account and confirm owner badge + admin access.
+- Register normal user and confirm free badge + starting credits.
+- From owner session, upgrade user to premium and verify:
+  - badge changes to premium
+  - credits increase by exactly 100
+  - action no longer shown for that user (already premium)
+- Confirm blocked/deleted account actions still work and do not affect owner account.
+
+If migrations are needed:
+- Ensure users table has columns:
+  - is_blocked INTEGER DEFAULT 0
+  - account_tier TEXT DEFAULT 'free'
+
+If schema conflicts happen in Replit, back up and recreate users.db with latest schema from backend/server.py init_db().
